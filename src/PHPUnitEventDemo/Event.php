@@ -25,7 +25,7 @@ class Event
     public function reserve($user)
     {
         // 使用者報名
-        $this->attendees[] = $user;
+        $this->attendees[$user->id] = $user;
     }
 
     public function getAttendeeNumber()
