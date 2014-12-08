@@ -16,6 +16,6 @@ PHPUnit-Event-Demo
 * tests/
     * EventTest.php - 測試 `Event` 類別
 
-### 有問題
-* tests/EventTest.php - 兩個不同的測試放在同一個測試案例內
+### 修正的問題
+* tests/EventTest.php - 分成 `testReserve()`, `testUnreserve()` ，使用 `@depends` 取得來自 `testReserve()` 的活動物件
 
