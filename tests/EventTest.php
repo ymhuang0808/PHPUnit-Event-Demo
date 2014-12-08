@@ -4,7 +4,7 @@ class EventTest extends PHPUnit_Framework_TestCase
     public function testReserve()
     {
         // 測試報名
-
+        
         $eventId = 1;
         $eventName = '活動1';
         $eventStartDate = '2014-12-24 12:00:00';
@@ -39,7 +39,7 @@ class EventTest extends PHPUnit_Framework_TestCase
     public function testUnreserve($event)
     {
         // 測試取消報名
-
+        
         $userId = 1;
         $userName = 'User1';
         $userEmail = 'user1@openfoundry.org';
@@ -58,11 +58,38 @@ class EventTest extends PHPUnit_Framework_TestCase
     }
     
     /**
-     *  有問題：活動資料與測試放在一起
+     *  @dataProvider eventsDataProvider
      */
-    public function testAttendeeLimitReserve()
+    public function testAttendeeLimitReserve($eventId, $eventName, $eventStartDate, 
+        $eventEndDate, $eventDeadline, $attendeeLimit)
     {
         // 測試報名人數限制
+        $event = new \PHPUnitEventDemo\Event($eventId, $eventName, $eventStartDate, 
+            $eventEndDate, $eventDeadline, $attendeeLimit);
+        $userNumber = 6;
+        
+        // 建立不同使用者報名
+        for ($userCount = 1; $userCount <= $userNumber; $userCount++) {
+            $userId = $userCount;
+            $userName = 'User ' . $userId;
+            $userEmail = 'user' . $userId . '@openfoundry.org';
+            $user = new \PHPUnitEventDemo\User($userId, $userName, $userEmail);
+            
+            $reservedResult = $event->reserve($user);
+            
+            // 報名人數是否超過
+            if ($userCount > $attendeeLimit) {
+                
+                // 無法報名
+                $this->assertFalse($reservedResult);
+            } else {
+                $this->assertTrue($reservedResult);
+            }
+        }
+    }
+    
+    public function eventsDataProvider()
+    {
         $eventId = 1;
         $eventName = "活動1";
         $eventStartDate = '2014-12-24 12:00:00';
@@ -71,34 +98,25 @@ class EventTest extends PHPUnit_Framework_TestCase
         $eventAttendeeLimitNotFull = 5;
         $eventAttendeeFull = 10;
         
-        $attendeeLimits = array(
-            $eventAttendeeLimitNotFull,
-            $eventAttendeeFull
+        $eventsData = array(
+            array(
+                $eventId,
+                $eventName,
+                $eventStartDate,
+                $eventEndDate,
+                $eventDeadline,
+                $eventAttendeeLimitNotFull
+            ) ,
+            array(
+                $eventId,
+                $eventName,
+                $eventStartDate,
+                $eventEndDate,
+                $eventDeadline,
+                $eventAttendeeFull
+            )
         );
         
-        foreach ($attendeeLimits as $attendeeLimit) {
-            $event = new \PHPUnitEventDemo\Event($eventId, $eventName, $eventStartDate, 
-                $eventEndDate, $eventDeadline, $attendeeLimit);
-            $userNumber = 6;
-            
-            // 建立不同使用者報名
-            for ($userCount = 1; $userCount <= $userNumber; $userCount++) {
-                $userId = $userCount;
-                $userName = 'User ' . $userId;
-                $userEmail = 'user' . $userId . '@openfoundry.org';
-                $user = new \PHPUnitEventDemo\User($userId, $userName, $userEmail);
-                
-                $reservedResult = $event->reserve($user);
-                
-                // 報名人數是否超過
-                if ($userCount > $attendeeLimit) {
-                    
-                    // 無法報名
-                    $this->assertFalse($reservedResult);
-                } else {
-                    $this->assertTrue($reservedResult);
-                }
-            }
-        }
+        return $eventsData;
     }
 }
