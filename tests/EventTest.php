@@ -2,7 +2,10 @@
 
 class EventTest extends PHPUnit_Framework_TestCase
 {
-    public function testReserve()
+    /**
+    *   不應該把兩個不同的測試放在一起
+    */
+    public function testReserveAndUnreserve()
     {
         $eventId = 1; 
         $eventName = '活動1';
@@ -26,5 +29,14 @@ class EventTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($expectedNumber, $event->getAttendeeNumber());
         // 報名清單中有已經報名的人
         $this->assertContains($user, $event->attendees);
+
+        // 使用者取消報名
+        $event->unreserve($user);
+
+        $unreserveExpectedCount = 0;
+        // 預期報名人數
+        $this->assertEquals($unreserveExpectedCount, $event->getAttendeeNumber());
+        // 報名清單中沒有已經取消報名的人
+        $this->assertNotContains($user, $event->attendees);
     }
 }

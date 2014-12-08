@@ -33,4 +33,10 @@ class Event
         // 取得報名人數
         return sizeof($this->attendees);
     }
+
+    public function unreserve($user)
+    {
+        // 使用者取消報名
+        unset($this->attendees[$user->id]);
+    }
 }
