@@ -1,7 +1,7 @@
 PHPUnit-Event-Demo
 ==================
 
-## Branch: start 
+## Branch: test2-with-reserve-and-unreserve 
 
 ### 目錄結構
 * src - 程式
