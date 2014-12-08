@@ -1,6 +1,6 @@
 <?php
-
 namespace PHPUnitEventDemo;
+
 
 class Event
 {
@@ -11,7 +11,7 @@ class Event
     public $deadline;
     public $attendee_limit;
     public $attendees = array();
-
+    
     public function __construct($id, $name, $start_date, $end_date, $deadline, $attendee_limit)
     {
         $this->id = $id;
@@ -21,21 +21,29 @@ class Event
         $this->deadline = $deadline;
         $this->attendee_limit = $attendee_limit;
     }
-
+    
     public function reserve($user)
-    {
-        // 使用者報名
-        $this->attendees[$user->id] = $user;
+    {       
+        // 報名人數是否超過限制 
+        if ($this->attendee_limit > $this->getAttendeeNumber()) {
+            // 使用者報名
+            $this->attendees[$user->id] = $user;
+            
+            return true;
+        }
+        
+        return false;
     }
-
+    
     public function getAttendeeNumber()
-    {
+    {   
         // 取得報名人數
         return sizeof($this->attendees);
     }
-
+    
     public function unreserve($user)
     {
+        
         // 使用者取消報名
         unset($this->attendees[$user->id]);
     }

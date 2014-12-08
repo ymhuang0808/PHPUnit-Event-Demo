@@ -1,7 +1,7 @@
 PHPUnit-Event-Demo
 ==================
 
-## Branch: test2 
+## Branch: test3-with-data-and-test-case 
 
 ### 目錄結構
 * src - 程式
@@ -16,6 +16,6 @@ PHPUnit-Event-Demo
 * tests/
     * EventTest.php - 測試 `Event` 類別
 
-### 修正的問題
-* tests/EventTest.php - 分成 `testReserve()`, `testUnreserve()` ，使用 `@depends` 取得來自 `testReserve()` 的活動物件
+### 問題
+* tests/EventTest.php - `testAttendeeLimitReserve()`內活動資料與測試放在一起
 
