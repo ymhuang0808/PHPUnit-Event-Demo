@@ -119,4 +119,32 @@ class EventTest extends PHPUnit_Framework_TestCase
         
         return $eventsData;
     }
+
+    /**
+     * @expectedException \PHPUnitEventDemo\EventException
+     * @expectedExceptionMessage Duplicated reservation
+     * @expectedExceptionCode 1
+     */
+    public function testDuplicatedReservationWithException()
+    {
+        // 測試重複報名，預期丟出異常
+        
+        $eventId = 1;
+        $eventName = '活動1';
+        $eventStartDate = '2014-12-24 12:00:00';
+        $eventEndDate = '2014-12-24 13:30:00';
+        $eventDeadline = '2014-12-23 23:59:59';
+        $eventAttendeeLimit = 10;
+        $event = new \PHPUnitEventDemo\Event($eventId, $eventName, $eventStartDate, 
+            $eventEndDate, $eventDeadline, $eventAttendeeLimit);
+        
+        $userId = 1;
+        $userName = 'User1';
+        $userEmail = 'user1@openfoundry.org';
+        $user = new \PHPUnitEventDemo\User($userId, $userName, $userEmail);
+
+        // 同一個使用者報名兩次
+        $event->reserve($user);
+        $event->reserve($user);
+    }
 }

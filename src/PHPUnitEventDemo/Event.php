@@ -26,6 +26,13 @@ class Event
     {       
         // 報名人數是否超過限制 
         if ($this->attendee_limit > $this->getAttendeeNumber()) {
+            if (array_key_exists($user->id, $this->attendees)) {
+                throw new \PHPUnitEventDemo\EventException(
+                    'Duplicated reservation',
+                    \PHPUnitEventDemo\EventException::DUPLICATED_REGISTRATION
+                );
+            }
+
             // 使用者報名
             $this->attendees[$user->id] = $user;
             
