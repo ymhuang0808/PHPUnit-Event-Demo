@@ -1,7 +1,7 @@
 PHPUnit-Event-Demo
 ==================
 
-== 分支說明
+## 分支說明
 
 * start - 起始專案
     * 基本目錄架構，autoloading 功能
