@@ -1,7 +1,7 @@
 PHPUnit-Event-Demo
 ==================
 
-## Branch: test3 
+## Branch: test4 
 
 ### 目錄結構
 * src - 程式
@@ -16,6 +16,6 @@ PHPUnit-Event-Demo
 * tests/
     * EventTest.php - 測試 `Event` 類別
 
-### 修改的問題
-* tests/EventTest.php - `testAttendeeLimitReserve()` 使用 `eventsDataProvider` 的資料 
+### 測試案例
+* tests/EventTest.php - 增加 `testDuplicatedReservationWithException()` 預期重複報名丟出異常 
 
