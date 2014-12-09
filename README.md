@@ -1,7 +1,7 @@
 PHPUnit-Event-Demo
 ==================
 
-## Branch: test4 
+## Branch: test4-with-fixtures
 
 ### 目錄結構
 * src - 程式
@@ -17,5 +17,5 @@ PHPUnit-Event-Demo
     * EventTest.php - 測試 `Event` 類別
 
 ### 測試案例
-* tests/EventTest.php - 增加 `testDuplicatedReservationWithException()` 預期重複報名丟出異常 
+* tests/EventTest.php - 增加 `setUp()`, `tearDown()` 
 
