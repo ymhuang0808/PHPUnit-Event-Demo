@@ -34,30 +34,6 @@ class EventTest extends PHPUnit_Framework_TestCase
     }
     
     /**
-     *  @depends testReserve
-     */
-    public function testUnreserve($event)
-    {
-        // 測試取消報名
-        
-        $userId = 1;
-        $userName = 'User1';
-        $userEmail = 'user1@openfoundry.org';
-        $user = new \PHPUnitEventDemo\User($userId, $userName, $userEmail);
-        
-        // 使用者取消報名
-        $event->unreserve($user);
-        
-        $unreserveExpectedCount = 0;
-        
-        // 預期報名人數
-        $this->assertEquals($unreserveExpectedCount, $event->getAttendeeNumber());
-        
-        // 報名清單中沒有已經取消報名的人
-        $this->assertNotContains($user, $event->attendees);
-    }
-    
-    /**
      *  @dataProvider eventsDataProvider
      */
     public function testAttendeeLimitReserve($eventId, $eventName, $eventStartDate, 
@@ -86,6 +62,8 @@ class EventTest extends PHPUnit_Framework_TestCase
                 $this->assertTrue($reservedResult);
             }
         }
+
+        return $event;
     }
     
     public function eventsDataProvider()
@@ -118,5 +96,29 @@ class EventTest extends PHPUnit_Framework_TestCase
         );
         
         return $eventsData;
+    }
+
+    /**
+     *  @depends testAttendeeLimitReserve
+     */
+    public function testUnreserve($event)
+    {
+        // 測試取消報名
+        
+        $userId = 1;
+        $userName = 'User 1';
+        $userEmail = 'user1@openfoundry.org';
+        $user = new \PHPUnitEventDemo\User($userId, $userName, $userEmail);
+        
+        // 使用者取消報名
+        $event->unreserve($user);
+        
+        $unreserveExpectedCount = 0;
+        
+        // 預期報名人數
+        $this->assertEquals($unreserveExpectedCount, $event->getAttendeeNumber());
+        
+        // 報名清單中沒有已經取消報名的人
+        $this->assertNotContains($user, $event->attendees);
     }
 }
