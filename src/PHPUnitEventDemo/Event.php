@@ -29,7 +29,7 @@ class Event
             if (array_key_exists($user->id, $this->attendees)) {
                 throw new \PHPUnitEventDemo\EventException(
                     'Duplicated reservation',
-                    \PHPUnitEventDemo\EventException::DUPLICATED_REGISTRATION
+                    \PHPUnitEventDemo\EventException::DUPLICATED_RESERVATION
                 );
             }
 
