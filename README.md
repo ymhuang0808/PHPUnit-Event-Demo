@@ -7,5 +7,3 @@ PHPUnit-Event-Demo
 * src - 程式
 * tests - 測試程式
 * vendor - Composer 套件
-
-**更多說明請閱讀 wiki**
