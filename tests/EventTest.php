@@ -2,6 +2,7 @@
 class EventTest extends PHPUnit_Framework_TestCase
 {
     private $event;
+    private $user;
 
     public function setUp()
     {
@@ -13,24 +14,25 @@ class EventTest extends PHPUnit_Framework_TestCase
         $eventAttendeeLimit = 10;
         $this->event = new \PHPUnitEventDemo\Event($eventId, $eventName, $eventStartDate, 
             $eventEndDate, $eventDeadline, $eventAttendeeLimit);
+
+        $userId = 1;
+        $userName = 'User1';
+        $userEmail = 'user1@openfoundry.org';
+        $this->user = new \PHPUnitEventDemo\User($userId, $userName, $userEmail);
     }
 
     public function tearDown()
     {
         $this->event = null;
+        $this->user = null;
     }
 
     public function testReserve()
     {
         // 測試報名
         
-        $userId = 1;
-        $userName = 'User1';
-        $userEmail = 'user1@openfoundry.org';
-        $user = new \PHPUnitEventDemo\User($userId, $userName, $userEmail);
-        
         // 使用者報名活動
-        $this->event->reserve($user);
+        $this->event->reserve($this->user);
         
         $expectedNumber = 1;
         
@@ -38,17 +40,19 @@ class EventTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($expectedNumber, $this->event->getAttendeeNumber());
         
         // 報名清單中有已經報名的人
-        $this->assertContains($user, $this->event->attendees);
+        $this->assertContains($this->user, $this->event->attendees);
         
-        return $this->event;
+        return [$this->event, $this->user];
     }
     
     /**
      *  @depends testReserve
      */
-    public function testUnreserve($event)
+    public function testUnreserve($objs)
     {
         // 測試取消報名
+        $event = $objs[0];
+        $user = $objs[1];
         
         $userId = 1;
         $userName = 'User1';
@@ -138,14 +142,9 @@ class EventTest extends PHPUnit_Framework_TestCase
     public function testDuplicatedReservationWithException()
     {
         // 測試重複報名，預期丟出異常
-                
-        $userId = 1;
-        $userName = 'User1';
-        $userEmail = 'user1@openfoundry.org';
-        $user = new \PHPUnitEventDemo\User($userId, $userName, $userEmail);
 
         // 同一個使用者報名兩次
-        $this->event->reserve($user);
-        $this->event->reserve($user);
+        $this->event->reserve($this->user);
+        $this->event->reserve($this->user);
     }
 }
