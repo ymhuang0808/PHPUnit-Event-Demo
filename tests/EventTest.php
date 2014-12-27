@@ -27,18 +27,17 @@ class EventTest extends PHPUnit_Framework_TestCase
         // 報名清單中有已經報名的人
         $this->assertContains($user, $event->attendees);
 
-        return $event;
+        return [$event, $user];
     }
 
     /**
      *  @depends testReserve
      */
-    public function testUnreserve($event)
+    public function testUnreserve($objs)
     {
-        $userId = 1;
-        $userName = 'User1';
-        $userEmail = 'user1@openfoundry.org';
-        $user = new \PHPUnitEventDemo\User($userId, $userName, $userEmail);
+        // 測試使用者取消報名
+        $event = $objs[0];
+        $user = $objs[1];
 
         // 使用者取消報名
         $event->unreserve($user);
