@@ -1,7 +1,7 @@
 PHPUnit-Event-Demo
 ==================
 
-## Branch: test3-with-data-and-test-case 
+## Branch: test3 
 
 ### 目錄結構
 * src - 程式
@@ -16,6 +16,6 @@ PHPUnit-Event-Demo
 * tests/
     * EventTest.php - 測試 `Event` 類別
 
-### 問題
-* tests/EventTest.php - `testAttendeeLimitReserve()`內活動資料與測試放在一起
+### 修改的問題
+* tests/EventTest.php - `testAttendeeLimitReserve()` 使用 `eventsDataProvider` 的資料 
 
