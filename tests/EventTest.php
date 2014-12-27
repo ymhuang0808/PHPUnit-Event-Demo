@@ -54,11 +54,6 @@ class EventTest extends PHPUnit_Framework_TestCase
         $event = $objs[0];
         $user = $objs[1];
         
-        $userId = 1;
-        $userName = 'User1';
-        $userEmail = 'user1@openfoundry.org';
-        $user = new \PHPUnitEventDemo\User($userId, $userName, $userEmail);
-        
         // 使用者取消報名
         $event->unreserve($user);
         
